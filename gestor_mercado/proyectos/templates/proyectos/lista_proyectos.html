@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Proyectos{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-4">
+    <h2>Proyectos</h2>
+    {% if user.es_gestor %}
+    <a href="{% url 'crear_proyecto' %}" class="btn btn-success">Nuevo Proyecto</a>
+    {% endif %}
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Fecha Límite</th>
+                <th>Progreso</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td>{{ proyecto.nombre }}</td>
+                <td><span class="badge bg-{{ proyecto.get_estado_class }}">{{ proyecto.get_estado_display }}</span></td>
+                <td>{{ proyecto.fecha_limite|date:"d/m/Y" }}</td>
+                <td>
+                    <!-- <div class="progress" style="height: 20px;">
+                        <div class="progress-bar" role="progressbar" style="width: {{ proyecto.porcentaje_completado|default:0 }}%;">
+                            {{ proyecto.porcentaje_completado|default:0 }}%
+                        </div>
+                    </div> -->
+                </td>
+                <td>
+                    <a href="{% url 'detalle_proyecto' proyecto.id %}" class="btn btn-sm btn-primary">Ver</a>
+                    {% if user.es_gestor %}
+                    <a href="{% url 'editar_proyecto' proyecto.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
