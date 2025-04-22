@@ -1,6 +1,8 @@
-# filepath: c:\Users\informaticos\Desktop\Empleo\gestor_mercado\datos\urls.py
+# datos/urls.py
 from django.urls import path
+from .views import ejecutar_scraping
 
 urlpatterns = [
-    # Define tus rutas aquí si es necesario
+    path('scraping/', ejecutar_scraping, name='ejecutar_scraping'),
+    # ... otras URLs
 ]
