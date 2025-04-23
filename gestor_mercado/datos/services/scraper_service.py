@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from django.utils.timezone import make_aware
 from urllib.parse import urljoin
-from models import OfertaEmpleo, Habilidad
+from datos.models import OfertaEmpleo, Habilidad
 
 class ScraperUnificado:
     HEADERS = {
@@ -67,7 +67,7 @@ class ScraperUnificado:
             habilidades = [self._normalizar_habilidad(h) for h in datos['habilidades']]
             oferta.habilidades.set(habilidades)
         
-        return oferta
+        return oferta  # Return the OfertaEmpleo object instead of just saving it
 
     def scrape_tecnoempleo(self, paginas=2):
         ofertas = []
